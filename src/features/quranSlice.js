@@ -28,6 +28,8 @@ const initialState = {
   // Tambahkan state bookmarks
   // Mengambil dari localStorage agar data tidak hilang saat refresh
   bookmarks: JSON.parse(localStorage.getItem('quran_bookmarks')) || [],
+  lastRead: JSON.parse(localStorage.getItem('lastRead')) || null, // Menyimpan data terakhir dibaca
+    darkMode: JSON.parse(localStorage.getItem('darkMode')) || false, // Menyimpan preferensi mode gelap
 };
 
 // ============ SLICE ============
@@ -65,6 +67,15 @@ const quranSlice = createSlice({
     clearAllBookmarks: (state) => {
       state.bookmarks = [];
       localStorage.removeItem('quran_bookmarks');
+    },
+
+    setLastRead: (state, action) => {
+  state.lastRead = action.payload;
+  localStorage.setItem('lastRead', JSON.stringify(action.payload));
+},
+    toggleDarkMode: (state) => {
+      state.darkMode = !state.darkMode;
+      localStorage.setItem('darkMode', JSON.stringify(state.darkMode));
     }
   },
   
@@ -98,6 +109,6 @@ const quranSlice = createSlice({
 });
 
 // Export actions baru
-export const { setSearchTerm, toggleBookmark, clearAllBookmarks } = quranSlice.actions;
+export const { setSearchTerm, toggleBookmark, clearAllBookmarks, setLastRead } = quranSlice.actions;
 
 export default quranSlice.reducer;

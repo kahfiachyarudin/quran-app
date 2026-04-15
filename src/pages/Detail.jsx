@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSurahDetail, toggleBookmark } from '../features/quranSlice';
+import { getSurahDetail, toggleBookmark, setLastRead } from '../features/quranSlice';
 import { SkeletonAyat } from '../components/Skeleton';
 
 const Detail = () => {
@@ -11,9 +11,25 @@ const Detail = () => {
 
   const { detailSurah, loading, bookmarks } = useSelector((state) => state.quran);
 
+  const [isSticky, setIsSticky] = useState(false);
+
   useEffect(() => {
     dispatch(getSurahDetail(nomor));
   }, [dispatch, nomor]);
+
+  useEffect(() => {
+  const handleScroll = () => {
+    // Jika scroll lebih dari 300px, set sticky jadi true
+    if (window.scrollY > 300) {
+      setIsSticky(true);
+    } else {
+      setIsSticky(false);
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
   
   useEffect(() => {
     if (!loading && hash && detailSurah) {
@@ -92,7 +108,8 @@ const Detail = () => {
         <div className="space-y-8">
           {detailSurah?.ayat.map((ayat) => (
             <div 
-              key={ayat.nomorAyat} 
+              key={ayat.nomorAyat}
+              onClick={() => dispatch(setLastRead({nomorSurah: nomor, nomorAyat: ayat.nomorAyat, namaSurah: detailSurah.namaLatin}))} 
               id={`ayat-${ayat.nomorAyat}`}
               className="group bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 transition-all duration-500 hover:shadow-2xl hover:border-emerald-100"
             >
@@ -106,21 +123,26 @@ const Detail = () => {
                   </div>
                   
                   <button
-                    onClick={() => dispatch(toggleBookmark({
-                      nomorSurah: detailSurah.nomor,
-                      namaSurah: detailSurah.namaLatin,
-                      nomorAyat: ayat.nomorAyat,
-                      teksArab: ayat.teksArab
-                    }))}
-                    className={`p-3 rounded-2xl transition-all duration-300 ${
-                      isBookmarked(ayat.nomorAyat) 
-                        ? 'bg-amber-50 text-amber-500 scale-110 shadow-lg shadow-amber-200/50' 
-                        : 'bg-slate-50 text-slate-300 hover:text-emerald-500 hover:bg-emerald-50'
-                    }`}
-                    title="Simpan Ayat"
-                  >
-                    <span className="text-xl">⭐</span>
-                  </button>
+  onClick={() => dispatch(toggleBookmark({
+    nomorSurah: detailSurah.nomor,
+    namaSurah: detailSurah.namaLatin,
+    nomorAyat: ayat.nomorAyat,
+    teksArab: ayat.teksArab
+  }))}
+  className={`p-3 rounded-2xl transition-all duration-300 ${
+    isBookmarked(ayat.nomorAyat) 
+      ? 'bg-amber-50 text-amber-500 scale-110 shadow-lg shadow-amber-200/50' 
+      : 'bg-slate-50 text-slate-400  hover:bg-emerald-50'
+  }`}
+  title="Simpan Ayat"
+>
+  {isBookmarked(ayat.nomorAyat) ? (
+    // Icon Bintang FULL (Sudah di-bookmark)
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-bookmark"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 2a5 5 0 0 1 5 5v14a1 1 0 0 1 -1.555 .832l-5.445 -3.63l-5.444 3.63a1 1 0 0 1 -1.55 -.72l-.006 -.112v-14a5 5 0 0 1 5 -5h4z" /></svg>  ) : (
+    // Icon Bintang GARIS (Belum di-bookmark)
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bookmark"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4" /></svg>
+  )}
+</button>
                 </div>
 
                 {/* TEKS ARAB */}

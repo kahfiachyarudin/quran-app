@@ -2,22 +2,34 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Bookmarks from './pages/Bookmark';
-import Footer from './components/Footer';
+import Layout from './layout/Layout';
 
 function App() {
+    const darkMode = useSelector(state => state.quran.darkMode);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
-    // BrowserRouter: Membungkus seluruh aplikasi untuk routing
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
-        {/* Routes: Container untuk semua Route */}
-        <Routes>
-          {/* Route: Menghubungkan URL dengan komponen */}
-          <Route path="/" element={<Home />} />
-          <Route path="/surat/:nomor" element={<Detail />} />
-          <Route path="/bookmarks" element={<Bookmarks />} />
-          {/* :nomor adalah parameter dinamis */}
-        </Routes>
-      </div>  
+      <Routes>
+        
+        {/* Layout sebagai parent */}
+        <Route path="/" element={<Layout />}>
+
+          {/* Child routes */}
+          <Route path='/' element={<Home />} />
+          <Route path="surat/:nomor" element={<Detail />} />
+          <Route path="bookmarks" element={<Bookmarks />} />
+
+        </Route>
+
+      </Routes>
     </BrowserRouter>
   );
 }

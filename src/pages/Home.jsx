@@ -7,6 +7,7 @@ import { SkeletonCard } from '../components/Skeleton';
 const Home = () => {
   const dispatch = useDispatch();
   const { surahList, loading, searchTerm, bookmarks } = useSelector((state) => state.quran);
+  const { lastRead } = useSelector((state) => state.quran);
 
   useEffect(() => {
     dispatch(getAllSurah());
@@ -25,29 +26,69 @@ const Home = () => {
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-emerald-800 rounded-full blur-3xl opacity-50"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <header className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">
-                Al-Qur'an <span className="text-emerald-300">Digital</span>
-              </h1>
-              <p className="text-emerald-100 text-lg font-light max-w-md">
-                "Sebaik-baik kali an adalah orang yang belajar Al-Qur'an dan mengajarkannya."
-              </p>
-            </div>
+          <header className="flex flex-col md:flex-row justify-between items-center gap-6 p-6 md:p-10 rounded-3xl mb-10">
 
-            <Link 
-              to="/bookmarks" 
-              className="group relative flex items-center gap-3 bg-white/90 backdrop-blur-md border border-white/20 text-[#0a1f44] px-8 py-3 rounded-2xl font-semibold transition-all hover:bg-white hover:text-emerald-800 hover:shadow-xl overflow-hidden"
-            >
-              <span className="text-xl group-hover:scale-125 transition-transform duration-300">⭐</span>
-              <span>Bookmark</span>
-              {bookmarks.length > 0 && (
-                <span className="bg-emerald-400 hover:text-emerald-900 text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full animate-pulse text-[#0a1f44]">
-                  {bookmarks.length}
-                </span>
-              )}
-            </Link>
-          </header>
+  {/* LEFT */}
+  <div className="text-center md:text-left">
+    <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">
+      Al-Qur'an <span className="text-emerald-300">Digital</span>
+    </h1>
+
+    <p className="text-emerald-100 text-lg font-light max-w-md">
+      "Sebaik-baik kalian adalah orang yang belajar Al-Qur'an dan mengajarkannya."
+    </p>
+
+    {/* LAST READ */}
+    {lastRead && (
+      <Link
+        to={`/surat/${lastRead.nomorSurah}#ayat-${lastRead.nomorAyat}`}
+        className="inline-block mt-4"
+      >
+        <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-xl text-sm text-emerald-700 hover:bg-white transition shadow">
+          📖 Lanjut: {lastRead.namaSurah} • Ayat {lastRead.nomorAyat}
+        </div>
+      </Link>
+    )}
+  </div>
+
+  {/* RIGHT */}
+  <div className="flex items-center gap-4">
+
+    {/* BOOKMARK BUTTON */}
+    <Link
+      to="/bookmarks"
+      className="group flex items-center gap-3 bg-white/90 backdrop-blur-md border border-white/20 text-[#0a1f44] px-6 py-3 rounded-2xl font-semibold transition-all hover:bg-white hover:text-emerald-800 hover:shadow-xl"
+    >
+      <span className="text-xl group-hover:scale-125 transition-transform duration-300">
+        {/* FIX class → className */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="icon"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4" />
+        </svg>
+      </span>
+
+      <span>Bookmark</span>
+
+      {bookmarks.length > 0 && (
+        <span className="bg-emerald-400 text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full animate-pulse text-[#0a1f44]">
+          {bookmarks.length}
+        </span>
+      )}
+    </Link>
+
+  </div>
+</header>
         </div>
       </div>
 
