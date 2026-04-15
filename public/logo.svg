@@ -1,0 +1,24 @@
+<svg width="300" height="300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BF9B30" /> <stop offset="50%" stop-color="#E7D192" /> <stop offset="100%" stop-color="#B38B2D" /> </linearGradient>
+  </defs>
+
+  <circle cx="50" cy="50" r="48" fill="#1A4314" stroke="url(#goldGradient)" stroke-width="1"/>
+
+  <path d="M50 10 C 60 10, 80 20, 80 40 L 80 70 C 80 80, 70 90, 50 90 C 30 90, 20 80, 20 70 L 20 40 C 20 20, 40 10, 50 10 Z" 
+        stroke="url(#goldGradient)" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+  <path d="M50 45C40 40 25 40 25 50V75C25 65 40 65 50 70M50 45V70" 
+        stroke="#F5F5F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 45C60 40 75 40 75 50V75C75 65 60 65 50 70" 
+        stroke="#F5F5F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M35 38C35 25 50 18 50 18C50 18 65 25 65 38" 
+        stroke="url(#goldGradient)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  
+  <path d="M32 55H43M32 60H43M32 65H43M57 55H68M57 60H68M57 65H68" 
+        stroke="url(#goldGradient)" stroke-width="0.7" opacity="0.8"/>
+
+  <path d="M50 25L51 28L54 29L51 30L50 33L49 30L46 29L49 28Z" fill="url(#goldGradient)"/>
+</svg>
