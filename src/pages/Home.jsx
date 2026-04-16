@@ -33,6 +33,21 @@ const Home = () => {
     s.namaLatin.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    // Munculkan tombol jika sudah scroll lebih dari 600px
+    setShowBackToTop(window.scrollY > 600);
+  };
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20 transition-colors duration-500">
       
@@ -174,6 +189,30 @@ const Home = () => {
           )}
         </div>
       </div>
+      {/* BACK TO TOP - Royal Blue Style */}
+<button
+  onClick={scrollToTop}
+  className={`fixed bottom-8 right-8 z-[100] p-4 rounded-2xl bg-blue-600 text-white shadow-[0_10px_30px_rgba(37,99,235,0.4)] transition-all duration-500 hover:bg-blue-700 hover:-translate-y-2 active:scale-95 ${
+    showBackToTop 
+      ? 'opacity-100 translate-y-0 scale-100' 
+      : 'opacity-0 translate-y-20 scale-50 pointer-events-none'
+  }`}
+  aria-label="Kembali ke atas"
+>
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="3" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</button>
     </div>
   );
 };
