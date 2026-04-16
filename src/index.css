@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@layer base {
+  /* Ini cara Tailwind v4 mendeteksi class dark */
+  :root {
+    --background: #f8fafc;
+    --primary: #059669;
+  }
+  
+  .dark {
+    --background: #020617;
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Royal Midnight Blue Palette */
+  --color-primary-default: #1e40af; /* Biru Royal - Pengganti Emerald */
+  --color-primary-light: #3b82f6;   /* Biru Terang - Untuk hover */
+  --color-primary-soft: #dbeafe;    /* Biru Muda - Untuk background tipis */
+  
+  /* Background yang lebih Deep & Clean */
+  --color-bg-light: #f1f5f9;        /* Slate 100 - Putih kebiruan agar sejuk */
+  --color-bg-dark: #020617;         /* Slate 950 - Hitam pekat */
+
+  /* Bonus: Tambahkan warna emas untuk aksen Bookmark/Highlight agar mewah */
+  --color-accent-gold: #fbbf24;
+}

@@ -17,7 +17,6 @@ const Detail = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Kita set sticky kalau sudah lewat area header (sekitar 400px)
       setIsSticky(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
