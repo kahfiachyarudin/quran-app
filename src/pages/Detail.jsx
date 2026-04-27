@@ -65,16 +65,29 @@ const listQori = [
       
       {/* 1. STICKY BACK BUTTON (Selalu ada di pojok kiri atas) */}
       <div className="fixed top-6 left-6 z-[100] pointer-events-none">
-        <Link 
-          to="/" 
-          className="pointer-events-auto inline-flex items-center justify-center w-12 h-12 md:w-auto md:px-5 bg-white/10 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 text-white rounded-2xl shadow-2xl hover:bg-blue-600 transition-all duration-300 group"
-          title="Kembali ke Beranda"
-        >
-          <span className="text-xl group-hover:-translate-x-1 transition-transform text-[#020617] dark:text-[#F8FAFC]">←</span>
-          <span className="hidden md:block ml-3 font-bold text-xs tracking-widest uppercase text-[#020617] dark:text-[#F8FAFC]">Beranda</span>
-        </Link>
-      </div>
-
+  <Link 
+    to="/" 
+    className="
+      pointer-events-auto 
+      inline-flex items-center justify-center 
+      w-12 h-12 md:w-auto md:px-5 
+      
+      bg-white text-black
+      mix-blend-difference
+      
+      rounded-2xl shadow-2xl 
+      transition-all duration-300 group
+    "
+    title="Kembali ke Beranda"
+  >
+    <span className="text-xl group-hover:-translate-x-1 transition-transform">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
+    </span>
+    <span className="hidden md:block ml-3 font-bold text-xs tracking-widest uppercase">
+      Beranda
+    </span>
+  </Link>
+</div>
       {/* FLOATING AUDIO CONSOLE */}
 {detailSurah && (
   <div className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6 bg-gradient-to-t from-slate-950 via-slate-900/95 to-transparent backdrop-blur-md">
